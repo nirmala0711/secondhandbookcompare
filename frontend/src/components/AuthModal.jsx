@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, User, Mail, Lock, LogIn, UserPlus, AlertCircle, CheckCircle2 } from 'lucide-react';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 
 export default function AuthModal({ isOpen, initialMode = 'login', noticeMsg = '', onClose, onAuthSuccess }) {
   const [mode, setMode] = useState(initialMode); // 'login' or 'signup'
@@ -41,12 +43,11 @@ export default function AuthModal({ isOpen, initialMode = 'login', noticeMsg = '
     try {
       if (mode === 'signup') {
         // Sign Up Flow: registers account, but requires user to log in
-        const res = await fetch('http://localhost:5000/api/auth/register', {
+        const res = await fetch(`${API_URL}/api/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: name.trim(), email: email.trim(), password })
         });
-
         const data = await res.json();
 
         if (!data.success) {
@@ -60,12 +61,11 @@ export default function AuthModal({ isOpen, initialMode = 'login', noticeMsg = '
         }
       } else {
         // Log In Flow: validates credentials and returns signed JWT token
-        const res = await fetch('http://localhost:5000/api/auth/login', {
+        const res = await fetch(`${API_URL}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.trim(), password })
         });
-
         const data = await res.json();
 
         if (!data.success) {
