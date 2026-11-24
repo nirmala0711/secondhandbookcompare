@@ -45,12 +45,7 @@ export default function Navbar({
                 <span>Log out</span>
               </button>
             </>
-          ) : (
-            <button className="nav-btn nav-btn-primary" onClick={onOpenSignup} title="Sign up">
-              <UserPlus size={15} />
-              <span>Sign up</span>
-            </button>
-          )}
+          ) : null}
 
           <button className="nav-btn wishlist-nav-btn" onClick={onOpenWishlist} title="Wishlist">
             <Heart
@@ -68,6 +63,13 @@ export default function Navbar({
             {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
           </button>
+
+          {!user && (
+            <button className="nav-btn nav-btn-primary" onClick={onOpenSignup} title="Sign up">
+              <UserPlus size={15} />
+              <span>Sign up</span>
+            </button>
+          )}
         </div>
       </div>
     </header>
